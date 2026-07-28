@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<!DOCTYPE roadpricing SYSTEM "http://www.matsim.org/files/dtd/roadpricing_v1.dtd">
+<!-- EXISTING MDTA tolls, 2023 base year: the three Baltimore harbor crossings.
+     Rate: $3.00 per crossing per direction = 2-axle E-ZPass Maryland rate (effective 2021-04-29,
+     unchanged through 2023; MDTA harbor crossings toll in BOTH directions, flat 24/7).
+     Resident-only population: MD E-ZPass rate is the appropriate base ($4 other-state EZP,
+     $6 video are minority classes for residents; sensitivity headroom noted in docs).
+     One tolled link per directional path so each crossing is charged exactly once:
+       I-895 Baltimore Harbor Tunnel: links 53478 / 41878 (full tunnel tube per direction)
+       I-95 Fort McHenry Tunnel: one link per bore (2 bores per direction, vehicle uses exactly one):
+         355067 (bore 1), 373985 (bore 2), 373989 (bore 3), 236094 (bore 4)
+       I-695 Francis Scott Key Bridge: keybridge_eb / keybridge_wb (bridge RESTORED for 2023 base; absent from post-collapse OSM) -->
+<roadpricing type="link" name="mdta_existing_2023">
+    <description>Existing MDTA harbor-crossing tolls, 2023 ($3.00 2-axle E-ZPass MD, both directions)</description>
+    <links>
+        <link id="53478"><cost start_time="00:00:00" end_time="36:00:00" amount="3.0"/></link>
+        <link id="41878"><cost start_time="00:00:00" end_time="36:00:00" amount="3.0"/></link>
+        <link id="355067"><cost start_time="00:00:00" end_time="36:00:00" amount="3.0"/></link>
+        <link id="373985"><cost start_time="00:00:00" end_time="36:00:00" amount="3.0"/></link>
+        <link id="373989"><cost start_time="00:00:00" end_time="36:00:00" amount="3.0"/></link>
+        <link id="236094"><cost start_time="00:00:00" end_time="36:00:00" amount="3.0"/></link>
+        <link id="keybridge_eb"><cost start_time="00:00:00" end_time="36:00:00" amount="3.0"/></link>
+        <link id="keybridge_wb"><cost start_time="00:00:00" end_time="36:00:00" amount="3.0"/></link>
+    </links>
+</roadpricing>

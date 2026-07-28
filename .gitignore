@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+target/
+*.jar
+*.class
+*.xml.gz
+*.csv.gz
+*.parquet
+outputs/
+runs/
+scenOutput/
+.DS_Store

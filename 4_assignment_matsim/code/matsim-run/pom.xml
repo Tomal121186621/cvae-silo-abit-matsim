@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.umd.matsim</groupId>
+    <artifactId>baltimore-matsim</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <maven.compiler.release>17</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <matsim.version>2024.0</matsim.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>matsim</id>
+            <url>https://repo.matsim.org/repository/matsim</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.matsim</groupId>
+            <artifactId>matsim</artifactId>
+            <version>${matsim.version}</version>
+        </dependency>
+        <!-- Road Pricing extension (MATSim-NYC Sec. 5.2): scores the I-695 toll as monetary
+             disutility so ReRoute/TimeAllocationMutator/SubtourModeChoice respond to it. -->
+        <dependency>
+            <groupId>org.matsim.contrib</groupId>
+            <artifactId>roadpricing</artifactId>
+            <version>${matsim.version}</version>
+        </dependency>
+        <!-- Cadyts NOT used: no cadyts-integration published for matsim 2024.0 (only 2027.0-* or 13.1-*);
+             upgrading matsim to get it would risk changing scoring/mobsim behavior. The systematic
+             principal-arterial over-count (+56%) is corrected at the facility level instead (arterial
+             free-speed / capacity route-split calibration) — no dependency, no behavior-version risk. -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>shade</goal></goals>
+                        <configuration>
+                            <artifactSet>
+                                <excludes>
+                                    <!-- old Sun JAI native-codec ImageIO: its CLibJPEGImageReaderSpi fails to
+                                         instantiate on modern JDKs (vendorName==null) and crashes MATSim at startup.
+                                         Not needed (we don't read rasters; CRS transforms use geotools referencing). -->
+                                    <exclude>javax.media:jai_imageio</exclude>
+                                </excludes>
+                            </artifactSet>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            </transformers>
+                            <filters>
+                                <filter><artifact>*:*</artifact><excludes>
+                                    <exclude>META-INF/*.SF</exclude><exclude>META-INF/*.DSA</exclude><exclude>META-INF/*.RSA</exclude>
+                                </excludes></filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

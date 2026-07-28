@@ -1,0 +1,7 @@
+RTS: 96,629 trips, 57,627 tours, 41,914 persons
+ABIT: 1,532,610 legs sampled, 672,241 tours, 155,033 persons
+trip-based MITO: 934,193 trips
+median trip km RTS: 4.2
+median trip km ABIT: 6.2
+median trip km MITO: 3.7
+wrote fig_abit_vs_tripbased + stats
