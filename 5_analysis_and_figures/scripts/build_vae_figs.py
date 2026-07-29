@@ -30,7 +30,7 @@ LABELS = {
     "race": ["White", "Black", "Hisp.", "Asian", "Other"],
     "occupation": ["Emp.", "Student", "Retiree", "Unemp.", "Toddler", "Other"],
     "driversLicense": ["No", "Yes"], "nationality": ["Native", "Natur.", "Non-cit."],
-    "relationship": ["Head", "Spouse", "Child", "Sibling", "Parent", "Other-r", "Non-rel", "GQ"],
+    "relationship": ["Head", "Spouse", "Child", "Sibling", "Parent", "Oth. rel.", "Non-rel.", "GQ"],
 }
 AGE = [f"{5*i}-{5*i+4}" if i < 17 else "85+" for i in range(18)]
 # income bin labels from vaelib config edges (outputs/00_raw_analysis/income_bin_edges.json)
@@ -174,16 +174,25 @@ def marg_combined(specs, ncols, fname):
         tk = "hh_income_bin" if (level == "hh" and name == "income_bin") else \
              ("pp_income_bin" if (level == "pp" and name == "income_bin") else name)
         tv = float(D[f"m_{level}_{name}_tv"])
-        # horizontal labels for short/few-category panels; diagonal only where needed;
-        # only the long panels (income bins, age bands) are thinned, so no category is hidden.
-        maxlen = max((len(str(l)) for l in labs), default=0)
-        rot = 0 if (len(labs) <= 5 and maxlen <= 6) else 45
-        sp = 6 if len(labs) > 12 else None
+        # horizontal labels everywhere they fit; diagonal only for relationship (8 long
+        # names); long ordinal axes (income, age) get a few horizontal edge labels
+        # instead of thinned diagonal ones, with every bar still drawn.
+        rot = 45 if name in ("relationship", "occupation") else 0
         ps.grouped_bar(axs[i], labs,
                        [(ps.LAB_OBS, D[f"m_{level}_{name}_obs"] * 100, ps.OBS),
                         (ps.LAB_SIM, D[f"m_{level}_{name}_sim"] * 100, ps.SIM)],
-                       title=f"{SHORT.get(tk, name)} (TV={tv:.3f})", rotate=rot, sparse=sp)
-        axs[i].tick_params(labelsize=6.5)
+                       title=f"{SHORT.get(tk, name)} (TV={tv:.3f})", rotate=rot, sparse=None)
+        if name == "age_bin":
+            tks = list(range(0, len(labs), 4))
+            axs[i].set_xticks(tks)
+            axs[i].set_xticklabels([AGE[t] for t in tks], rotation=0, ha="center")
+        elif name == "income_bin":
+            inc = HHINC if level == "hh" else PPINC
+            step = 4 if level == "hh" else 3
+            tks = list(range(0, len(labs), step))
+            axs[i].set_xticks(tks)
+            axs[i].set_xticklabels([inc[t] for t in tks], rotation=0, ha="center")
+        axs[i].tick_params(labelsize=7)
         ps.panel_letter(axs[i], i, size=7.5)
     for i in range(len(specs), nrows * ncols):
         axs[i].axis("off")

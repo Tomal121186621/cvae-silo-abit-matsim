@@ -16,15 +16,11 @@ LS = ROOT / "scenarios/02_i695_congestion_pricing/runs/loaded_base_v4/ITERS/it.1
 TMAS = ROOT / "network_validation_2023/tmas"
 OUT = ROOT / "trb_paper/figures/counts"
 
-STATIONS = [  # station_id -> clean panel title
-    ("0P0032", "I-695 at Ingleside Ave\n(west beltway)"),
-    ("0P0077", "I-695 at Hollins Ferry Rd\n(southwest beltway)"),
-    ("0P0078", "I-695 south of I-795\n(northwest beltway)"),
-    ("0P0054", "I-695 at Cromwell Bridge Rd\n(northeast beltway)"),
-    ("0P0074", "I-695 at Trappe Rd\n(east beltway)"),
-    ("0P0071", "I-95 north of I-195\n(southwest approach)"),
-    ("0P0052", "I-83 north of I-695\n(north approach)"),
-    ("0P0053", "I-70 west of I-695\n(west approach)"),
+STATIONS = [  # station_id -> clean panel title (paper subset)
+    ("0P0032", "I-695 at Ingleside Avenue\n(western Beltway)"),
+    ("0P0074", "I-695 at Trappe Road\n(eastern Beltway)"),
+    ("0P0071", "I-95 north of I-195\n(southwestern approach)"),
+    ("0P0052", "I-83 north of I-695\n(northern approach)"),
 ]
 
 plt.rcParams.update({"font.family": "serif", "font.size": 8.5, "axes.spines.top": False,
@@ -41,7 +37,7 @@ assert len(hrcols) == 24, hrcols
 ls["LINK"] = ls["LINK"].astype(str)
 lk = ls.set_index("LINK")[hrcols]
 
-fig, axes = plt.subplots(2, 4, figsize=(6.8, 3.9), sharex=True, sharey=True,
+fig, axes = plt.subplots(2, 2, figsize=(6.8, 3.9), sharex=True, sharey=True,
                          gridspec_kw={"hspace": 0.52, "top": 0.80})
 for ax, (sid, title) in zip(axes.flat, STATIONS):
     row = val[val.station_id == sid].iloc[0]

@@ -36,9 +36,7 @@ def main():
     ax1.set_xlim(ep.min(), ep.max())
     ax1.set_ylim(18, 30)
     ax1.text(anneal + 3, 28.6, "$\\beta$ annealing", fontsize=7.5, color="0.35")
-    ax1.annotate(f"final gap {gap:.2f} nats", xy=(ep.max(), h["val_total"].iloc[-1]),
-                 xytext=(ep.max() * 0.42, 24.3), fontsize=7.6,
-                 arrowprops=dict(arrowstyle="->", color="0.4", lw=0.7))
+    # gap annotation removed (2026-07-29): curves speak for themselves
     ax1.legend(frameon=False, loc="upper right", fontsize=8)
 
     fig.tight_layout()

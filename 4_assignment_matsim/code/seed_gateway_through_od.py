@@ -47,7 +47,7 @@ import numpy as np, pandas as pd
 
 ROOT = Path("/Users/tomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Updated MATSim")
 GATEWAYS = ROOT / "network_validation_2023/calibration/gateways_2023.csv"
-NETWORK  = ROOT / "network_validation_2023/network_audit/bmr_network_pt_speedcal_fixed.xml.gz"
+NETWORK  = ROOT / "network_validation_2023/network_audit/bmr_network_pt_speedcal_fixed_i83.xml.gz"  # i83 border stub (2026-07-29 rematch)
 TMAS_PROFILES = ROOT / "network_validation_2023/tmas/station_profiles.csv"
 V8_POP   = ROOT / "scenarios/01_base_no_pricing/input/matsim_population_abit_bmr_v8.xml.gz"
 REPORT   = ROOT / "network_validation_2023/calibration/through_od_seed_report.csv"

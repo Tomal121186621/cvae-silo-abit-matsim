@@ -38,7 +38,7 @@ ROOT = Path("/Users/tomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Update
 CODE = ROOT / "code"
 CAL_STATIONS = ROOT / "network_validation_2023/calibration/spsa_calibration_stations.csv"
 GATEWAYS = ROOT / "network_validation_2023/calibration/gateways_2023.csv"
-NET_SPEEDFIX = ROOT / "network_validation_2023/network_audit/bmr_network_pt_speedcal_fixed.xml.gz"
+NET_SPEEDFIX = ROOT / "network_validation_2023/network_audit/bmr_network_pt_speedcal_fixed_i83.xml.gz"  # i83 border stub (2026-07-29 rematch)
 RUN_TOLL = ROOT / "scenarios/02_i695_congestion_pricing/run_toll.sh"
 WORK = ROOT / "runs" / "spsa"
 
